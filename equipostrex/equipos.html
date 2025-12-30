@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Salud Web - Equipos | The JUJU Agency</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Identidad Visual */
+            --primary-color: #0b86a2; 
+            --highlight-color: #d5f355;
+            --dark-text: #2c3e50;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--white);
+            color: var(--dark-text);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+            padding: 4rem 0;
+            border-bottom: 5px solid var(--highlight-color);
+        }
+
+        .score-card-main {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #eee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            /* Gradiente para reflejar un puntaje de ~58% */
+            background: conic-gradient(var(--warning-color) 0% 58%, #e0e0e0 58% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .score-circle::after {
+            content: '';
+            width: 130px;
+            height: 130px;
+            background: var(--white);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .score-number {
+            position: relative;
+            z-index: 2;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+
+        .score-label {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* Dashboard Cards */
+        .metric-card {
+            border: none;
+            border-radius: 15px;
+            background: var(--white);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .bg-icon-perf { background-color: rgba(220, 53, 69, 0.1); color: var(--danger-color); }
+        .bg-icon-seo { background-color: rgba(40, 167, 69, 0.1); color: var(--success-color); }
+        .bg-icon-access { background-color: rgba(255, 193, 7, 0.1); color: var(--warning-color); }
+        .bg-icon-best { background-color: rgba(11, 134, 162, 0.1); color: var(--primary-color); }
+
+        /* Accordion Customization */
+        .accordion-item {
+            border: 1px solid #eee;
+            border-radius: 10px !important;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .accordion-button {
+            background-color: #fff;
+            color: var(--dark-text);
+            font-weight: 600;
+            padding: 1.2rem;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(11, 134, 162, 0.05);
+            color: var(--primary-color);
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+        }
+
+        .nav-tabs .nav-link {
+            color: #666;
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Severity Badges */
+        .badge-critical { background-color: #ffebee; color: var(--danger-color); padding: 5px 10px; border-radius: 20px; font-size: 0.8em; margin-right: 10px;}
+        .badge-warning { background-color: #fff3cd; color: #856404; padding: 5px 10px; border-radius: 20px; font-size: 0.8em; margin-right: 10px;}
+        .badge-info { background-color: #e3f2fd; color: #0c5460; padding: 5px 10px; border-radius: 20px; font-size: 0.8em; margin-right: 10px;}
+
+        /* Good Job List */
+        .good-job-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        .check-icon {
+            color: var(--success-color);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .highlight-text {
+            background-color: var(--highlight-color);
+            padding: 0 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-4 mb-lg-0">
+                    <span class="badge bg-light text-dark mb-2 border">The JUJU Agency</span>
+                    <h1>Diagnóstico de Sitio de equipostrex.com</h1>
+                    <p class="subtitle mb-4">Análisis realizado para tu sitio web de equipostrex.com<br>Fecha: 15 de Diciembre, 2025</p>
+                    
+                    <div class="card border-0 bg-light p-4">
+                        <h4 class="mb-3">👋 Resumen Ejecutivo</h4>
+                        <p class="lead" style="font-size: 1.1rem;">
+                            ¡Hola equipo! Su plataforma es un recurso esencial para la búsqueda de equipos. Sin embargo, los datos técnicos indican que la <span class="highlight-text">velocidad en dispositivos móviles</span> es un punto de dolor. Las imágenes de alta definición de la maquinaria y la carga de scripts están ralentizando el primer vistazo, lo que podría estar costando consultas valiosas.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="score-card-main">
+                        <h3>Puntaje Global</h3>
+                        <div class="score-circle">
+                            <span class="score-number">58</span>
+                        </div>
+                        <div class="score-label">Nivel: Requiere Ajustes</div>
+                        <p class="mt-3 text-muted small">Promedio ponderado de Rendimiento, SEO y Usabilidad.</p>
+                        <a href="#action-plan" class="btn btn-dark mt-2" style="background-color: var(--primary-color); border:none;">Ver Plan de Optimización 👇</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD VISUAL -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold" style="color: var(--primary-color);">Tu Sitio Web de un Vistazo</h2>
+            
+            <div class="row g-4 mb-5">
+                <!-- Card 1: Rendimiento -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="icon-box bg-icon-perf"><i class="bi bi-speedometer2"></i></div>
+                            <span class="fw-bold fs-4 text-danger">42/100</span>
+                        </div>
+                        <h5 class="fw-bold">Rendimiento</h5>
+                        <p class="small text-muted mb-0">La carga inicial es lenta. Las imágenes de los equipos pesan demasiado para redes móviles.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2: SEO -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="icon-box bg-icon-seo"><i class="bi bi-search"></i></div>
+                            <span class="fw-bold fs-4 text-success">85/100</span>
+                        </div>
+                        <h5 class="fw-bold">SEO Técnico</h5>
+                        <p class="small text-muted mb-0">¡Bien! Las fichas de equipos están bien estructuradas para ser encontradas en Google.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Accesibilidad -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="icon-box bg-icon-access"><i class="bi bi-tools"></i></div>
+                            <span class="fw-bold fs-4 text-warning">74/100</span>
+                        </div>
+                        <h5 class="fw-bold">Usabilidad</h5>
+                        <p class="small text-muted mb-0">Algunos botones de contacto son pequeños para dedos en pantallas táctiles.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Buenas Prácticas -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="icon-box bg-icon-best"><i class="bi bi-shield-check"></i></div>
+                            <span class="fw-bold fs-4" style="color: var(--primary-color);">90/100</span>
+                        </div>
+                        <h5 class="fw-bold">Seguridad</h5>
+                        <p class="small text-muted mb-0">Sitio seguro (HTTPS). Protege las consultas de los clientes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Radar Chart Section -->
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h5 class="mb-3 text-muted">Balance de Métricas</h5>
+                    <div class="chart-container mx-auto" style="max-width: 500px;">
+                        <canvas id="auditRadarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTION PLAN SECTION -->
+    <section id="action-plan" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge bg-warning text-dark mb-2">Hoja de Ruta</span>
+                <h2 class="fw-bold" style="color: var(--primary-color);">Tu Plan de Acción Priorizado</h2>
+                <p class="text-muted">Las 3 acciones que tendrán el mayor impacto en tu velocidad.</p>
+            </div>
+
+            <div class="accordion" id="accordionPlan">
+                
+                <!-- FINDING 1: Heavy Images (Critical) -->
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <span class="badge-critical">🔴 Crítico</span>
+                            Optimizar imágenes de maquinaria (LCP alto)
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionPlan">
+                        <div class="accordion-body">
+                            <!-- Tabs -->
+                            <ul class="nav nav-tabs mb-3" id="tab1" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="meaning1-tab" data-bs-toggle="tab" data-bs-target="#meaning1" type="button" role="tab">🤔 ¿Qué significa?</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="impact1-tab" data-bs-toggle="tab" data-bs-target="#impact1" type="button" role="tab">🎯 ¿Por qué me afecta?</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="fix1-tab" data-bs-toggle="tab" data-bs-target="#fix1" type="button" role="tab">🛠️ ¿Cómo lo soluciono?</button>
+                                </li>
+                            </ul>
+                            <!-- Tab Content -->
+                            <div class="tab-content p-3">
+                                <div class="tab-pane fade show active" id="meaning1" role="tabpanel">
+                                    <p class="lead">El elemento más grande (LCP) suele ser la foto principal del equipo. Actualmente, estas fotos son muy pesadas y tardan en "pintarse" en la pantalla del celular.</p>
+                                </div>
+                                <div class="tab-pane fade" id="impact1" role="tabpanel">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">📉 <strong>Abandono:</strong> Si la foto no carga rápido, el cliente pierde interés y se va.</li>
+                                        <li class="list-group-item">📱 <strong>Datos:</strong> Consumes el plan de datos del usuario innecesariamente.</li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" id="fix1" role="tabpanel">
+                                    <h5>Pasos Técnicos:</h5>
+                                    <ol>
+                                        <li class="mb-2"><strong>Formato WebP:</strong> Convertir las imágenes a WebP (más ligero y eficiente).</li>
+                                        <li class="mb-2"><strong>Tamaño Correcto:</strong> Servir imágenes de tamaño móvil para celulares y de tamaño escritorio para computadoras (imágenes responsivas).</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FINDING 2: Unused JavaScript (Important) -->
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <span class="badge-warning">🟡 Importante</span>
+                            Reducir scripts que bloquean la carga
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionPlan">
+                        <div class="accordion-body">
+                             <!-- Tabs -->
+                             <ul class="nav nav-tabs mb-3" id="tab2" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="meaning2-tab" data-bs-toggle="tab" data-bs-target="#meaning2" type="button" role="tab">🤔 ¿Qué significa?</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="impact2-tab" data-bs-toggle="tab" data-bs-target="#impact2" type="button" role="tab">🎯 Experiencia</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="fix2-tab" data-bs-toggle="tab" data-bs-target="#fix2" type="button" role="tab">🛠️ Solución</button>
+                                </li>
+                            </ul>
+                            <!-- Tab Content -->
+                            <div class="tab-content p-3">
+                                <div class="tab-pane fade show active" id="meaning2" role="tabpanel">
+                                    <p>Tu sitio carga códigos (scripts) que no se usan de inmediato, bloqueando la visualización del contenido.</p>
+                                </div>
+                                <div class="tab-pane fade" id="impact2" role="tabpanel">
+                                    <p>Esto hace que la página se sienta "congelada" durante los primeros segundos de carga.</p>
+                                </div>
+                                <div class="tab-pane fade" id="fix2" role="tabpanel">
+                                    <p>Usar la carga diferida (<code>defer</code> o <code>async</code>) para los scripts que no son esenciales para la primera impresión visual.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FINDING 3: Layout Shifts (CLS) (Optimization) -->
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <span class="badge-info">🟢 Optimización</span>
+                            Evitar movimientos inesperados (CLS)
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionPlan">
+                        <div class="accordion-body">
+                            <!-- Tabs -->
+                            <ul class="nav nav-tabs mb-3" id="tab3" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="meaning3-tab" data-bs-toggle="tab" data-bs-target="#meaning3" type="button" role="tab">🤔 ¿Qué significa?</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="impact3-tab" data-bs-toggle="tab" data-bs-target="#impact3" type="button" role="tab">🎯 Estabilidad</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="fix3-tab" data-bs-toggle="tab" data-bs-target="#fix3" type="button" role="tab">🛠️ Solución</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content p-3">
+                                <div class="tab-pane fade show active" id="meaning3" role="tabpanel">
+                                    <p>El CLS ocurre cuando elementos de la página (como botones o textos) se mueven de lugar mientras la página termina de cargar.</p>
+                                </div>
+                                <div class="tab-pane fade" id="impact3" role="tabpanel">
+                                    <p>Genera una mala experiencia y posibles clics erróneos en botones equivocados.</p>
+                                </div>
+                                <div class="tab-pane fade" id="fix3" role="tabpanel">
+                                    <p>Definir siempre el ancho y alto (<code>width</code> y <code>height</code>) de las imágenes y contenedores en el código para reservar su espacio.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOOD JOB SECTION -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2 class="fw-bold mb-4">¡Excelente Trabajo Aquí! 👏</h2>
+                    <p class="mb-4">El sitio tiene bases sólidas para crecer:</p>
+                    <ul class="list-unstyled good-job-list">
+                        <li><i class="bi bi-check-circle-fill check-icon"></i> <strong>Seguridad SSL:</strong> Sitio seguro para consultas y transacciones.</li>
+                        <li><i class="bi bi-check-circle-fill check-icon"></i> <strong>Adaptabilidad:</strong> Diseño que se ajusta bien a pantallas móviles.</li>
+                        <li><i class="bi bi-check-circle-fill check-icon"></i> <strong>Estructura Clara:</strong> Categorías y navegación bien organizadas.</li>
+                        <li><i class="bi bi-check-circle-fill check-icon"></i> <strong>Legibilidad:</strong> Fuentes de buen tamaño y contraste.</li>
+                    </ul>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1534/1534082.png" alt="Equipment Success" style="max-width: 250px; opacity: 0.9;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p class="mb-1">Reporte generado por <strong>The JUJU Agency</strong> para equipostrex.com</p>
+            <small>&copy; 2025 - Análisis basado en estándares Google PageSpeed Insights.</small>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // Inicializar Gráfico Radar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('auditRadarChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Rendimiento', 'SEO', 'Accesibilidad', 'Buenas Prácticas', 'Seguridad'],
+                    datasets: [{
+                        label: 'Puntaje Equipos',
+                        data: [42, 85, 74, 90, 100],
+                        fill: true,
+                        backgroundColor: 'rgba(213, 243, 85, 0.4)', // Color destacado con transparencia
+                        borderColor: '#0b86a2', // Color primario
+                        pointBackgroundColor: '#0b86a2',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#0b86a2'
+                    }]
+                },
+                options: {
+                    elements: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true,
+                                color: '#eee'
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: {
+                                stepSize: 20,
+                                backdropColor: 'transparent',
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
