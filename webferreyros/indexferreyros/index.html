@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditorías - Ferreyros</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .card-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .card-link:hover {
+            opacity: 0.9;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e8f0fe;
+            color: #667eea;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Centro de Auditorías</h1>
+            <p>Accede a todas las auditorías de Ferreyros en un solo lugar</p>
+        </header>
+
+        <div class="grid">
+            <!-- Repo 1: Auditorías-Web-Ferreyros (10 proyectos) -->
+            <a href="https://electrogenos.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Electrogenos</h3>
+                <p>Auditoría de generadores eléctricos y equipos electromecánicos.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://vixora.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Vixora</h3>
+                <p>Auditoría de equipos y sistemas vixora.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://unimaq.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Unimaq</h3>
+                <p>Auditoría de maquinaria y equipos industriales.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://equipostrex.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>EquiposTrex</h3>
+                <p>Auditoría de equipos de construcción y movimiento de tierras.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://ferreyros.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Ferreyros</h3>
+                <p>Auditoría principal de Ferreyros S.A.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://soltrack-one.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>SolTrack</h3>
+                <p>Auditoría de rastreo solar y seguimiento de sistemas.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://orvisa.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Orvisa</h3>
+                <p>Auditoría de sistemas y servicios especializados.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://operapp-blush.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>OperApp</h3>
+                <p>Auditoría de aplicaciones y operaciones.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://maquinet.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>MaquiNet</h3>
+                <p>Auditoría de maquinaria y conectividad industrial.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://forbislogistic.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Forbis Logistic</h3>
+                <p>Auditoría de logística y sistemas de distribución.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <!-- Repo 2: ferreyros- (6 proyectos) -->
+            <a href="https://fargoline.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Fargoline</h3>
+                <p>Auditoría de farmacos y líneas de distribución.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://clubdetecnicos.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Club de Técnicos</h3>
+                <p>Auditoría de asociación de técnicos certificados.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://cluboperadores.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Club de Operadores</h3>
+                <p>Auditoría de asociación de operadores profesionales.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://chevronlatam.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Chevron Latam</h3>
+                <p>Auditoría de operaciones Chevron Latinoamérica.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+
+            <a href="https://asociacionferreycorp.vercel.app/" class="card">
+                <span class="badge">Auditoría</span>
+                <h3>Asociación FerreyCorpo</h3>
+                <p>Auditoría de asociación corporativa Ferreyros.</p>
+                <span class="card-link">Acceder →</span>
+            </a>
+        </div>
+
+        <footer>
+            <p>Centro de Auditorías • Ferreyros S.A. | Desplegado en Vercel</p>
+        </footer>
+    </div>
+</body>
+
+</html>
